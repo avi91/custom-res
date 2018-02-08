@@ -49,9 +49,9 @@ var api = {
         if(api.isResponse(err))
         {
             if(api.isCustomError(err))
-                return err.send(res);
+                return err;
             else
-                return new CustomError(err).send(res);
+                return new CustomError(err);
         }
 
         var msg;
