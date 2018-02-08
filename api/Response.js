@@ -106,6 +106,10 @@ Response.prototype.message = function (msg) {
     return this;
 };
 
+Response.prototype.msg = function (msg) {
+    return this.message(msg);
+};
+
 Response.prototype.status = function (status) {
     if(_helpers.isCustomStatus(status))
         this._status = status.get();
@@ -119,6 +123,10 @@ Response.prototype.data = function (data) {
     this._data = data;
     return this;
 };
+
+Response.prototype.getErr = function () {
+    return this._err;
+}
 
 //Getters
 
@@ -139,11 +147,11 @@ Response.prototype.isResponse = function () {
 
 //Send function
 Response.prototype.send = function (res) {
+    if(typeof res === 'undefined')
+        throw 'express res object is not passed to send.';
     var response = this.get();
-
     if(!this._data)
         response.data = "";
-
     res.status(this._httpCode).send(this.get());
 };
 

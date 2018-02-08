@@ -37,6 +37,29 @@ var api = {
     },
     isCustomStatus: function (status) {
         return (status instanceof CustomStatus);
+    },
+    castData: function (data) {
+        var response = new Response().data(data);
+        return response;
+    },
+    castDataNSend: function (data, res) {
+       api.castData(data).send(res);
+    },
+    castErr: function (err) {
+        var msg;
+        var response = new CustomError();
+        if(typeof err === 'string')
+            msg = err;
+        else if(err instanceof Error)
+            msg = err.message || err.msg;
+        else{
+            msg = 'Something went wrong';
+            response._err = err;
+        }
+        return response.message(msg);
+    },
+    castErrNSend: function (err, res) {
+        api.castErr(err).send(res);
     }
 };
 

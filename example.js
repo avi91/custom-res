@@ -6,7 +6,8 @@ var status2 = CustomRes.createCustomStatus('second status', 2002, 'second desc')
 var msg2 = CustomRes.createMessage('new message')
 var response = CustomRes.createResponse().httpCode(303).message(msg).success(false).status(status2).set(status);
 var err = CustomRes.createCustomError(response).message(msg2)
+var err2 = CustomRes.castErr('This is error');
+var err3 = CustomRes.castErr(new Error('error type')).get();
+var err4 = CustomRes.castErrNSend(status2)
 
-console.log(response.send());
-
-console.log(err.send());
+console.log(err, err2, err3, err4);

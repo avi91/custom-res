@@ -14,8 +14,10 @@ CustomError.prototype.isCustomError = function () {
 };
 
 CustomError.prototype.send = function (res) {
-    var response = this.get();
+    if(typeof res === 'undefined')
+        throw 'express res object is not passed to send.';
 
+    var response = this.get();
     res.status(this._httpCode).send(this.get());
 };
 
