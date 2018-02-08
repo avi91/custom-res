@@ -39,8 +39,10 @@ var api = {
         return (status instanceof CustomStatus);
     },
     castData: function (data) {
-        var response = new Response().data(data);
-        return response;
+        if(api.isResponse(data))
+            return data;
+
+        return new Response().data(data);
     },
     castDataNSend: function (data, res) {
        api.castData(data).send(res);
