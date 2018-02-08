@@ -1,28 +1,37 @@
 var CustomError = require('./CustomError');
 var Response = require('./Response');
-var utils = require('./utils');
+var CustomStatus = require('./CustomStatus');
+var Message = require('./Message');
 
 var api = {
     Response: Response,
     CustomError: CustomError,
-    Message: utils.Message,
-    CustomStatus: utils.CustomStatus,
+    Message: Message,
+    CustomStatus: CustomStatus,
     createCustomError: function (msg, status) {
         return new CustomError(msg, status);
     },
     createResponse: function (msg, status) {
         return new Response(msg, status);
     },
-    createMessage: utils.createMessage,
-    createCustomStatus: utils.createCustomStatus,
+    createMessage: function (msg) {
+        return new Message(msg);
+    },
+    createCustomStatus: function (name, code, desc) {
+        return new CustomStatus(...arguments);
+    },
     isCustomError: function (error) {
         return (error instanceof CustomError);
     },
     isResponse: function (obj) {
         return (obj instanceof ResObj);
     },
-    isMessage: utils.isMessage,
-
+    isMessage: function (msg) {
+        return (msg instanceof Message)
+    },
+    isCustomStatus: function (status) {
+        return (status instanceof CustomStatus);
+    }
 };
 
 module.exports = api;
