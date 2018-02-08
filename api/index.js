@@ -30,7 +30,7 @@ var api = {
         return (error instanceof CustomError);
     },
     isResponse: function (obj) {
-        return (obj instanceof ResObj);
+        return (obj instanceof Response);
     },
     isMessage: function (msg) {
         return (msg instanceof Message)
