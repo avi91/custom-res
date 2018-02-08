@@ -2,8 +2,8 @@ var Response = require('./Response');
 
 function CustomError(msg, status) {
     Response.call(this,...arguments);
-    this.success = false;
-    this.httpCode = 400;
+    this._success = false;
+    this._httpCode = 400;
 }
 
 CustomError.prototype = Object.create(Response.prototype);
