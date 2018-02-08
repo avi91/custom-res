@@ -8,6 +8,12 @@ var api = {
     CustomError: CustomError,
     Message: Message,
     CustomStatus: CustomStatus,
+    create: function (msg, status) {
+        return new Response(msg, status);
+    },
+    err: function (msg, status) {
+        return new CustomError(msg, status);
+    },
     createCustomError: function (msg, status) {
         return new CustomError(msg, status);
     },
