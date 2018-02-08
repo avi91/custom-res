@@ -15,9 +15,8 @@ CustomError.prototype.isCustomError = function () {
 
 CustomError.prototype.send = function (res) {
     var response = this.get();
-    return response;
 
-    // res.status(this.httpCode).send(this.get());
+    res.status(this._httpCode).send(this.get());
 };
 
 module.exports = CustomError;

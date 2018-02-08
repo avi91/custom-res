@@ -143,8 +143,8 @@ Response.prototype.send = function (res) {
 
     if(!this._data)
         response.data = "";
-    return response;
-    // res.status(this.httpCode).send(this.get());
+
+    res.status(this._httpCode).send(this.get());
 };
 
 module.exports = Response;
