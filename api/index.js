@@ -46,6 +46,14 @@ var api = {
        api.castData(data).send(res);
     },
     castErr: function (err) {
+        if(api.isResponse(err))
+        {
+            if(api.isCustomError(err))
+                return err.send(res);
+            else
+                return new CustomError(err).send(res);
+        }
+
         var msg;
         var response = new CustomError();
         if(typeof err === 'string')
