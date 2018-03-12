@@ -1,6 +1,6 @@
 {
   "name": "custom-res",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "A custom generic response and custom error handling module.",
   "main": "index.js",
   "scripts": {
