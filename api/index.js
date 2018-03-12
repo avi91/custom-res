@@ -60,8 +60,16 @@ var api = {
         var response = new CustomError();
         if(typeof err === 'string')
             msg = err;
-        else if(err instanceof Error)
-            msg = err.message || err.msg;
+        else if(err instanceof Error){
+            if(err.name === 'StatusCodeError' && err.error){
+                var _customErr = new CustomError(err.error);
+                if(err.statusCode)
+                    _customErr.httpCode(err.statusCode);
+
+                return _customErr;
+            }
+            msg = err.message;
+        }
         else{
             msg = 'Something went wrong';
             response._err = err;

@@ -21,12 +21,33 @@ function Response(arg1, arg2){
             this._message = arg1;
         else if(_helpers.isCustomStatus(arg1))
             this._status = arg1.get();
+        else if(typeof arg1 === 'object'){
+            this._message = _helpers.createMessage(arg1.message).get();
+            this._status = _helpers.createCustomStatus(arg1.status).get();
+            this._success = arg1.success || true;
+            if(arg1.data)
+                this._data = arg1.data;
+        }
         else
             throw new Error('Arguments must be of Message/CustomStatus/Response/string type.')
     }
 
     if(typeof arg2 !== 'undefined'){
         if(arg1 instanceof Response){
+            if(arg2 instanceof Response)
+                throw new Error("Can't take two Response object as parameters");
+            if (_helpers.isMessage(arg2))
+                this._message = arg2.get();
+            else if(typeof arg2 === 'string')
+                this._message = arg2;
+            else if(_helpers.isCustomStatus(arg2))
+                this._status = arg2.get();
+            else
+                throw new Error('Arguments must be of Message/CustomStatus/Response/string type.')
+        }
+        else if(typeof arg1 === 'object'){
+            if(arg2 instanceof Response)
+                throw new Error("Can't take two Response object as parameters");
             if (_helpers.isMessage(arg2))
                 this._message = arg2.get();
             else if(typeof arg2 === 'string')

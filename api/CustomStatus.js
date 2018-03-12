@@ -1,4 +1,15 @@
 function CustomStatus(name, code, desc) {
+    if(arguments.length === 1){
+        var obj = arguments[0];
+        if(obj instanceof CustomStatus){
+            return obj;
+        }
+        else if(typeof obj === 'object'){
+            return new CustomStatus(obj.name, obj.code, obj.desc);
+        }
+        else if(typeof obj === 'string')
+            return new CustomStatus('','', obj);
+    }
     this._status = {
         name: name || "",
         code: code || "",
