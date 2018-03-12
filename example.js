@@ -8,9 +8,9 @@ var response = CustomRes.createResponse().httpCode(303).message(msg).success(fal
 var err = CustomRes.createCustomError(response).message(msg2)
 var err2 = CustomRes.castErr('This is error');
 var err3 = CustomRes.castErr(new Error('error type')).get();
-var err4 = CustomRes.castErr(status2)
-var status3 = CustomRes.createCustomStatus('asdljlajflkaj');
+var err4 = CustomRes.castErr({message: 'message is this'}).get()
 
-var clone = CustomRes.createCustomError(response, status);
 
-console.log(clone);
+// var clone = CustomRes.createCustomError(response, status);
+
+console.log(err4);

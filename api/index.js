@@ -70,6 +70,9 @@ var api = {
             }
             msg = err.message;
         }
+        else if(typeof err === 'object'){
+            return new CustomError(err);
+        }
         else{
             msg = 'Something went wrong';
             response._err = err;

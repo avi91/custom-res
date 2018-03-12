@@ -22,9 +22,13 @@ function Response(arg1, arg2){
         else if(_helpers.isCustomStatus(arg1))
             this._status = arg1.get();
         else if(typeof arg1 === 'object'){
-            this._message = _helpers.createMessage(arg1.message).get();
-            this._status = _helpers.createCustomStatus(arg1.status).get();
             this._success = arg1.success || true;
+            if(arg1.message) {
+                this._message = _helpers.createMessage(arg1.message).get();
+            }
+            if(arg1.status) {
+                this._status = _helpers.createCustomStatus(arg1.status).get();
+            }
             if(arg1.data)
                 this._data = arg1.data;
         }
