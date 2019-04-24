@@ -1,4 +1,5 @@
 var _helpers = require('./utils');
+var options = require('./options').opts;
 
 function Response(arg1, arg2){
     this._httpCode = 200;
@@ -127,7 +128,7 @@ Response.prototype.message = function (msg) {
         this._message = msg;
     else
         throw new Error('Message can only be of Message type or String.')
-    
+
     return this;
 };
 
@@ -140,7 +141,7 @@ Response.prototype.status = function (status) {
         this._status = status.get();
     else
         throw new Error('Status is not CustomStatus type.');
-    
+
     return this;
 };
 
@@ -174,10 +175,38 @@ Response.prototype.isResponse = function () {
 Response.prototype.send = function (res) {
     if(typeof res === 'undefined')
         throw 'express res object is not passed to send.';
-    var response = this.get();
     if(!this._data)
-        response.data = "";
+        this._data = "";
+    if(!this._message && options.takeMsgFromStatusDesc && this._status.desc)
+        this._message = this._status.desc;
+
+    if(!this._message && options.defaults.successMsg)
+        this._message = options.defaults.successMsg;
+
     res.status(this._httpCode).send(this.get());
 };
+
+//Opts getter
+Object.defineProperty(Response.prototype, 'opts', {
+    get: function getOpts() {
+        return Response.prototype._opts;
+    },
+    set: function (v) {
+        Response.prototype._opts = v;
+    }
+});
+
+//Responses
+Object.defineProperty(Response.prototype, 'responses', {
+    get: function getOpts() {
+        return Response.prototype._responses;
+    },
+    set: function (v) {
+        Response.prototype._responses = v;
+    }
+});
+
+Response.opts = options;
+Response.responses = options.responses;
 
 module.exports = Response;
