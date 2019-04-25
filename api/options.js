@@ -1,6 +1,9 @@
 var options = {
   globals: false, //To create global variables of msg and status
   takeMsgFromStatusDesc: false,
+  logError: true,
+  logger: null,
+  debug: process.env.NODE_ENV !== 'production',
   defaults: {
     successMsg: '',
     errMsg: '',

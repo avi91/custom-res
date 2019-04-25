@@ -15,6 +15,9 @@ function Response(arg1, arg2){
             this._success = arg1._success;
             if(arg1._data)
                 this._data = arg1._data;
+
+            if(arg1._error)
+                this._error = arg1._error;
         }
         else if (_helpers.isMessage(arg1))
             this._message = arg1.get();
@@ -32,6 +35,9 @@ function Response(arg1, arg2){
             }
             if(arg1.data)
                 this._data = arg1.data;
+
+            if(arg1.error)
+                this._error = arg1.error;
         }
         else
             throw new Error('Arguments must be of Message/CustomStatus/Response/string type.')
@@ -83,6 +89,9 @@ Response.prototype.get = function () {
     };
     if(this._data)
         response.data = this._data;
+
+    if(this._error && options.debug)
+        response.error = this._error;
 
     return response;
 };
@@ -150,9 +159,14 @@ Response.prototype.data = function (data) {
     return this;
 };
 
-Response.prototype.getErr = function () {
-    return this._err;
-}
+Response.prototype.error = function (error) {
+    this._error = error;
+    return this;
+};
+
+Response.prototype.getError = function () {
+    return this._error;
+};
 
 //Getters
 
@@ -177,6 +191,7 @@ Response.prototype.send = function (res) {
         throw 'express res object is not passed to send.';
     if(!this._data)
         this._data = "";
+
     if(!this._message && options.takeMsgFromStatusDesc && this._status.desc)
         this._message = this._status.desc;
 

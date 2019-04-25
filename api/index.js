@@ -4,6 +4,8 @@ var options = require('./options');
 function init(opts) {
   options.createOptions(opts);
   function middleware(req, res, next) {
+    res.create = api.create;
+    res.err = api.err;
     res.customRes = api;
     res.createCustomError = api.createCustomError;
     res.createResponse = api.createResponse;

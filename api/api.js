@@ -71,13 +71,14 @@ var api = {
                 return _customErr;
             }
             msg = err.message;
+            response.error(err.stack);
         }
         else if(typeof err === 'object'){
             return new CustomError(err);
         }
         else{
             msg = opts.defaults ? opts.defaults.errMsg || 'Something went wrong' : 'Something went wrong';
-            response._err = err;
+            response._error = err;
         }
         return response.message(msg);
     },
