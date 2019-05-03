@@ -1,12 +1,11 @@
 var express = require('express');
 var app = express();
 var customRes = require('../')({
-  globals: true,
   defaults: {
     successMsg: 'Default Success Msg',
     errMsg: 'Default Err Msg'
   },
-  logError: false,
+  logError: true,
   responses: {
     msg: {},
     status: {}
