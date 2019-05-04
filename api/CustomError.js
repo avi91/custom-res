@@ -4,7 +4,7 @@ var options = require('./options').opts;
 function CustomError(arg1, arg2) {
     Response.call(this,...arguments);
     this._success = false;
-    this._httpCode = this._httpCode || (options.defaults ? options.defaults.errorStatusCode || 400 : 400);
+    this._httpCode = this._httpCode !== 200 ? this._httpCode : (options.defaults ? options.defaults.errorStatusCode || 400 : 400);
 }
 
 CustomError.prototype = Object.create(Response.prototype);
