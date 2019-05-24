@@ -18,6 +18,9 @@ function Response(arg1, arg2){
 
             if(arg1._error)
                 this._error = arg1._error;
+
+            if(arg1._sendErrInRes)
+                this._sendErrInRes = arg1._sendErrInRes;
         }
         else if (_helpers.isMessage(arg1))
             this._message = arg1.get();
@@ -36,8 +39,10 @@ function Response(arg1, arg2){
             if(arg1.data)
                 this._data = arg1.data;
 
-            if(arg1.error)
+            if(arg1.error){
                 this._error = arg1.error;
+                this._sendErrInRes = true;
+            }
         }
         else
             throw new Error('Arguments must be of Message/CustomStatus/Response/string type.')
@@ -90,7 +95,7 @@ Response.prototype.get = function () {
     if(this._data)
         response.data = this._data;
 
-    if(this._error && options.debug)
+    if(this._error && (options.debug || this._sendErrInRes))
         response.error = this._error;
 
     return response;
@@ -161,6 +166,7 @@ Response.prototype.data = function (data) {
 
 Response.prototype.error = function (error) {
     this._error = error;
+    this._sendErrInRes = true;
     return this;
 };
 

@@ -71,7 +71,7 @@ var api = {
                 return _customErr;
             }
             msg = err.message;
-            response.error(err.stack);
+            response._error = err.stack;
         }
         else if(typeof err === 'object'){
             return new CustomError(err);
